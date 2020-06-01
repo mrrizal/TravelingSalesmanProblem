@@ -1,5 +1,26 @@
 package utils
 
+import (
+	"sort"
+)
+
+// FilterSlice filter slice x with y
+func FilterSlice(x, y []int) []int {
+	result := []int{}
+
+	for _, value := range x {
+		searchResult := sort.SearchInts(y, value)
+		if searchResult == len(y) {
+			result = append(result, value)
+		} else if y[searchResult] != value {
+			result = append(result, value)
+		}
+	}
+	return result
+
+}
+
+// Permutations return permutation from given slice of int
 func Permutations(arr []int) [][]int {
 	var helper func([]int, int)
 	res := [][]int{}
