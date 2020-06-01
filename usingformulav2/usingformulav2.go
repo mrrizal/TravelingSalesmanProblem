@@ -1,4 +1,4 @@
-package main
+package usingformulav2
 
 import (
 	"fmt"
@@ -54,7 +54,15 @@ func countCost() {
 
 	shortestPath = make(map[int]map[string]int)
 
-	for key, permutation := range utils.Permutations([]int{1, 2, 3}) {
+	index := func() []int {
+		result := []int{}
+		for i := 0; i < len(data[0])-1; i++ {
+			result = append(result, i+1)
+		}
+		return result
+	}()
+
+	for key, permutation := range utils.Permutations(index) {
 		shortestPath[key] = map[string]int{
 			"cost":     0,
 			"tempCost": 0,
@@ -74,12 +82,9 @@ func countCost() {
 	result.path = append([]int{0}, result.path...)
 	fmt.Println(result.path, result.cost)
 }
-func main() {
-	data = [][]int{
-		[]int{0, 10, 15, 20},
-		[]int{5, 0, 9, 10},
-		[]int{6, 13, 0, 12},
-		[]int{8, 8, 9, 0},
-	}
+
+//SolveTSP solve tsp using formula
+func SolveTSP(datas [][]int) {
+	data = datas
 	countCost()
 }

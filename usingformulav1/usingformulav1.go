@@ -1,4 +1,4 @@
-package main
+package usingformulav1
 
 import (
 	"fmt"
@@ -40,7 +40,16 @@ func countCost() shortestPath {
 	}
 
 	i := 0
-	for _, s := range utils.Permutations([]int{1, 2, 3}) {
+
+	index := func() []int {
+		result := []int{}
+		for i := 0; i < len(data[0])-1; i++ {
+			result = append(result, i+1)
+		}
+		return result
+	}()
+
+	for _, s := range utils.Permutations(index) {
 		k := s[0]
 		cost := generateFormula(i, k, s)
 		if result.cost == 0 {
@@ -56,16 +65,11 @@ func countCost() shortestPath {
 	return result
 }
 
-func main() {
+//SolveTSP solve tsp using formula
+func SolveTSP(datas [][]int) {
 	// try to solve traveling salesman problem using recursive,
 	// but i think it's buggy
-	data = [][]int{
-		[]int{0, 10, 15, 20},
-		[]int{5, 0, 9, 10},
-		[]int{6, 13, 0, 12},
-		[]int{8, 8, 9, 0},
-	}
-
+	data = datas
 	result := countCost()
 	fmt.Println(result.path, result.cost)
 

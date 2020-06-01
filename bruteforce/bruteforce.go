@@ -1,4 +1,4 @@
-package main
+package bruteforce
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ type shortestPath struct {
 	cost int
 }
 
-// CountCost counting brutefoce way
+// CountCost counting bruteforce way
 func countCost(data, permutation [][]int) shortestPath {
 	result := shortestPath{
 		path: []int{0},
@@ -37,14 +37,8 @@ func countCost(data, permutation [][]int) shortestPath {
 	return result
 }
 
-func main() {
-	data := [][]int{
-		[]int{0, 10, 15, 20},
-		[]int{5, 0, 9, 10},
-		[]int{6, 13, 0, 12},
-		[]int{8, 8, 9, 0},
-	}
-
+//SolveTSP solve tsp brute foce way
+func SolveTSP(data [][]int) {
 	index := func() []int {
 		result := []int{}
 		for i := 0; i < len(data[0])-1; i++ {
