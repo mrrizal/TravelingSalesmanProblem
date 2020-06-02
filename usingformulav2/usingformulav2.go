@@ -13,34 +13,16 @@ type result struct {
 	path []int
 }
 
-var shortestPath map[int]map[string]int
-
-func generatePermutation(index []int, key int) {
-	firstIndex := index[0]
-	index = utils.FilterSlice(index, []int{firstIndex})
-
-	permutations := utils.Permutations(index)
-	for _, permutation := range permutations {
-		cost := data[firstIndex][permutation[0]]
-
-		if len(permutation) == 1 {
-			shortestPath[key]["tempCost"] += cost
-
-			if shortestPath[key]["cost"] == 0 {
-				shortestPath[key]["cost"] = shortestPath[key]["tempCost"]
-			} else if shortestPath[key]["cost"] >= shortestPath[key]["tempCost"] {
-				shortestPath[key]["cost"] = shortestPath[key]["tempCost"]
-			}
-
-			shortestPath[key]["tempCost"] = 0
+func getCost(path []int) int {
+	cost := 0
+	for i := 0; i < len(path); i++ {
+		if i+1 < len(path) {
+			cost = cost + data[path[i]][path[i+1]]
 		} else {
-			shortestPath[key]["tempCost"] += cost
-		}
-
-		if len(permutation) > 1 {
-			generatePermutation(permutation, key)
+			cost = cost + data[path[i]][path[0]]
 		}
 	}
+	return cost
 }
 
 func countCost() {
@@ -52,8 +34,6 @@ func countCost() {
 		cost: 0,
 	}
 
-	shortestPath = make(map[int]map[string]int)
-
 	index := func() []int {
 		result := []int{}
 		for i := 0; i < len(data[0])-1; i++ {
@@ -62,24 +42,18 @@ func countCost() {
 		return result
 	}()
 
-	for key, permutation := range utils.Permutations(index) {
-		shortestPath[key] = map[string]int{
-			"cost":     0,
-			"tempCost": 0,
-		}
-		generatePermutation(permutation, key)
-		shortestPath[key]["cost"] += data[0][permutation[0]]
-		shortestPath[key]["cost"] += data[permutation[len(permutation)-1]][0]
-
+	for _, permutation := range utils.Permutations(index) {
+		permutation = append([]int{0}, permutation...)
+		cost := getCost(permutation)
 		if result.cost == 0 {
+			result.cost = cost
 			result.path = permutation
-			result.cost = shortestPath[key]["cost"]
-		} else if result.cost >= shortestPath[key]["cost"] {
+		} else if result.cost >= cost {
+			result.cost = cost
 			result.path = permutation
-			result.cost = shortestPath[key]["cost"]
 		}
 	}
-	result.path = append([]int{0}, result.path...)
+
 	fmt.Println(result.path, result.cost)
 }
 
