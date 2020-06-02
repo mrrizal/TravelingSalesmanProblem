@@ -1,4 +1,6 @@
 # TravelingSalesmanProblem
+## sucsks, in my implementation, using formula is same as bruteforce, hahaha
+
 
 formula based on this video: https://www.youtube.com/watch?v=Q4zHb-Swzro
 

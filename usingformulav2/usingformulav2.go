@@ -13,6 +13,8 @@ type result struct {
 	path []int
 }
 
+var res result
+
 func getCost(path []int) int {
 	cost := 0
 	for i := 0; i < len(path); i++ {
@@ -21,18 +23,19 @@ func getCost(path []int) int {
 		} else {
 			cost = cost + data[path[i]][path[0]]
 		}
+
+		if res.cost != 0 {
+			if cost > res.cost {
+				return 0
+			}
+		}
 	}
 	return cost
 }
 
 func countCost() {
-	result := struct {
-		path []int
-		cost int
-	}{
-		path: []int{},
-		cost: 0,
-	}
+	res.cost = 0
+	res.path = []int{}
 
 	index := func() []int {
 		result := []int{}
@@ -45,16 +48,17 @@ func countCost() {
 	for _, permutation := range utils.Permutations(index) {
 		permutation = append([]int{0}, permutation...)
 		cost := getCost(permutation)
-		if result.cost == 0 {
-			result.cost = cost
-			result.path = permutation
-		} else if result.cost >= cost {
-			result.cost = cost
-			result.path = permutation
+		if cost == 0 {
+			continue
+		}
+
+		if res.cost == 0 || res.cost >= cost {
+			res.cost = cost
+			res.path = permutation
 		}
 	}
 
-	fmt.Println(result.path, result.cost)
+	fmt.Println(res.path, res.cost)
 }
 
 //SolveTSP solve tsp using formula
