@@ -72,6 +72,7 @@ func countCost() {
 		}
 	}
 
+	res.path = append(res.path, 0)
 	fmt.Println(res.path, res.cost)
 }
 

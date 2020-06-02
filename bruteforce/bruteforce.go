@@ -34,6 +34,7 @@ func countCost(data, permutation [][]int) shortestPath {
 	}
 
 	result.path = append([]int{0}, result.path...)
+	result.path = append(result.path, 0)
 	return result
 }
 
