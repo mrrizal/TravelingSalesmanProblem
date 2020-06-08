@@ -48,3 +48,38 @@ func Permutations(arr []int) [][]int {
 	helper(arr, len(arr))
 	return res
 }
+
+//Transpose matrix int
+func Transpose(slice [][]int) [][]int {
+	xl := len(slice[0])
+	yl := len(slice)
+	result := make([][]int, xl)
+	for i := range result {
+		result[i] = make([]int, yl)
+	}
+	for i := 0; i < xl; i++ {
+		for j := 0; j < yl; j++ {
+			result[i][j] = slice[j][i]
+		}
+	}
+	return result
+}
+
+// MinInts find min value from slice of int
+func MinInts(slice []int) int {
+	result := -1
+	for _, value := range slice {
+		if value != -1 {
+			if result == -1 {
+				result = value
+			} else if result > value {
+				result = value
+			}
+		}
+	}
+
+	if result == -1 {
+		result = 0
+	}
+	return result
+}
