@@ -7,12 +7,15 @@ import (
 // FilterSlice filter slice x with y
 func FilterSlice(x, y []int) []int {
 	result := []int{}
+	temp := []int{}
+	temp = append(temp, y...)
+	sort.Ints(temp)
 
 	for _, value := range x {
-		searchResult := sort.SearchInts(y, value)
-		if searchResult == len(y) {
+		searchResult := sort.SearchInts(temp, value)
+		if searchResult == len(temp) {
 			result = append(result, value)
-		} else if y[searchResult] != value {
+		} else if temp[searchResult] != value {
 			result = append(result, value)
 		}
 	}
@@ -82,4 +85,17 @@ func MinInts(slice []int) int {
 		result = 0
 	}
 	return result
+}
+
+// EqualSlice compare slice
+func EqualSlice(a, b []int) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, v := range a {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
 }
